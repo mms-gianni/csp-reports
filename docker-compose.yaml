@@ -10,10 +10,11 @@ services:
       - "514:514"    # Syslog TCP
       - "514:514/udp" # Syslog UDP
     volumes:
-      - ./vector/vector.toml:/etc/vector/vector.toml:ro
+      - ./vector/vector.yaml:/etc/vector/vector.yaml:ro
       - ./vector/data:/var/lib/vector
     depends_on:
       - loki
+    command: ["--config", "/etc/vector/vector.yaml"]
     networks:
       - logging
     restart: unless-stopped
