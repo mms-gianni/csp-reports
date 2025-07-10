@@ -9,6 +9,7 @@ services:
       - "9598:9598"  # Vector metrics
       - "514:514"    # Syslog TCP
       - "514:514/udp" # Syslog UDP
+      - "8080:8080"  # HTTP server for CSP reports
     volumes:
       - ./vector/vector.yaml:/etc/vector/vector.yaml:ro
       - ./vector/data:/var/lib/vector
@@ -33,7 +34,7 @@ services:
     restart: unless-stopped
 
   grafana:
-    image: grafana/grafana:10.2.2
+    image: grafana/grafana:12.0.2
     container_name: grafana
     ports:
       - "3000:3000"

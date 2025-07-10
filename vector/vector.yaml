@@ -3,10 +3,16 @@ api:
   address: "0.0.0.0:8686"
 
 sources:
-  demo_logs:
-    type: "demo_logs"
-    format: "syslog"
-    count: 100
+  #demo_logs:
+  #  type: "demo_logs"
+  #  format: "syslog"
+  #  count: 100
+
+  csp_reports:
+    type: "http_server"
+    address: "0.0.0.0:8080"
+    decoding:
+      codec: "json"
 
   syslog:
     type: "syslog"
@@ -23,7 +29,7 @@ transforms:
   parse_logs:
     type: "remap"
     inputs:
-      - "demo_logs"
+      - "csp_reports"
       - "syslog"
       - "file_logs"
     source: |
