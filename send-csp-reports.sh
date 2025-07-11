@@ -112,10 +112,10 @@ send_csp_report "Script Violation" "$DD"
 #sleep 1
 
 send_csp_report "Script Violation" "$SCRIPT_VIOLATION"
-sleep 1
+#sleep 1
 
 send_csp_report "Style Violation" "$STYLE_VIOLATION"
-sleep 1
+#sleep 1
 
 send_csp_report "Image Violation" "$IMAGE_VIOLATION"
 

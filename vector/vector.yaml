@@ -3,40 +3,14 @@ api:
   address: "0.0.0.0:8686"
 
 sources:
-  #demo_logs:
-  #  type: "demo_logs"
-  #  format: "syslog"
-  #  count: 100
-
   csp_reports:
     type: "http_server"
     address: "0.0.0.0:8080"
     decoding:
       codec: "json"
 
-  syslog:
-    type: "syslog"
-    address: "0.0.0.0:514"
-    mode: "tcp"
-
-  file_logs:
-    type: "file"
-    include:
-      - "/var/log/*.log"
-    ignore_older_secs: 600
-
 transforms:
-  parse_logs:
-    type: "remap"
-    inputs:
-      - "csp_reports"
-    source: |
-      .timestamp = now()
-      .service = "vector-demo"
-      if exists(.message) {
-        .message = string!(.message)
-      }
-  parse_csp_json:
+  parse_csp:
     type: "remap"
     inputs:
       - "csp_reports"
@@ -46,25 +20,15 @@ transforms:
       if exists(.message) {
         .message = string!(.message)
       }
-      .url = .url
-
 
 sinks:
   loki:
     type: "loki"
     inputs:
-      - "parse_logs"
-      - "parse_csp_json"
+      - "parse_csp"
     endpoint: "http://loki:3100"
     encoding:
       codec: "json"
     labels:
       service: "{{ service }}"
       source: "vector"
-
-  console:
-    type: "console"
-    inputs:
-      - "parse_logs"
-    encoding:
-      codec: "json"

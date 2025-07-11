@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -13,58 +16,68 @@
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 1,
   "links": [],
   "panels": [
     {
-      "datasource": "Loki",
+      "datasource": {
+        "type": "loki",
+        "uid": "P8E80F9AEF21F6940"
+      },
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 12,
+        "h": 33,
+        "w": 14,
         "x": 0,
         "y": 0
       },
       "id": 2,
       "options": {
+        "dedupStrategy": "none",
+        "enableInfiniteScrolling": false,
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
         "showLabels": false,
         "showTime": false,
         "sortOrder": "Descending",
-        "wrapLogMessage": false,
-        "enableLogDetails": true,
-        "dedupStrategy": "none"
+        "wrapLogMessage": false
       },
+      "pluginVersion": "12.0.2",
       "targets": [
         {
-          "expr": "{service=\"vector-demo\"}",
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "direction": "backward",
+          "editorMode": "builder",
+          "expr": "{service=\"csp-report\"} | json",
+          "queryType": "range",
           "refId": "A"
         }
       ],
-      "title": "Vector Demo Logs",
+      "title": "Logs",
       "type": "logs"
     },
     {
-      "datasource": "Loki",
+      "datasource": {
+        "type": "loki",
+        "uid": "P8E80F9AEF21F6940"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {
-            "align": null,
-            "displayMode": "auto"
-          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -77,74 +90,75 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
+        "w": 10,
+        "x": 14,
         "y": 0
       },
-      "id": 4,
+      "id": 5,
       "options": {
-        "showHeader": true
-      },
-      "pluginVersion": "7.4.0",
-      "targets": [
-        {
-          "expr": "sum by (service) (rate({source=\"vector\"}[5m]))",
-          "refId": "A"
-        }
-      ],
-      "title": "Log Rate by Service",
-      "type": "stat"
-    },
-    {
-      "datasource": "Loki",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        "overrides": []
+        "showHeader": true,
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 9
-      },
-      "id": 6,
-      "options": {
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false,
-        "enableLogDetails": true,
-        "dedupStrategy": "none"
-      },
+      "pluginVersion": "12.0.2",
       "targets": [
         {
-          "expr": "{source=\"vector\"} |= \"error\" or {source=\"vector\"} |= \"ERROR\"",
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "rate({service=\"csp-report\"}[1m])",
+          "queryType": "range",
           "refId": "A"
         }
       ],
-      "title": "Error Logs",
-      "type": "logs"
+      "title": "Log Rate /1m",
+      "type": "stat"
     }
   ],
-  "schemaVersion": 27,
-  "style": "dark",
+  "preload": false,
+  "schemaVersion": 41,
   "tags": [
     "vector",
     "loki",
     "logs"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "baseFilters": [],
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "filters": [],
+        "name": "Filters",
+        "type": "adhoc"
+      }
+    ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Vector & Loki Dashboard",
   "uid": "vector-loki-dashboard",
-  "version": 1
+  "version": 8
 }
