@@ -2,6 +2,8 @@
 
 Endpoint for Content Security Policy (CSP) reports using Vector, Loki, and Grafana.
 
+![Grafana Dashboard](./docs/img/grafana-dashboard.png)
+
 ## Services
 
 - **Vector**: Data collection and processing pipeline
