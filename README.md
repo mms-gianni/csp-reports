@@ -24,13 +24,24 @@ Endpoint for Content Security Policy (CSP) reports using Vector, Loki, and Grafa
 
 ## Configuration
 
+### CSP Header
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Reporting-Endpoints 
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/report-to  
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/report-uri (Deprecated)
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy-Report-Only
+
+
+```
+Reporting-Endpoints: csp-endpoint="https://example.com/csp-reports"
+Content-Security-Policy: default-src 'self'; report-to csp-endpoint
+```
+
 ### Vector
-- Configuration: `vector/vector.toml`
+- Configuration: `vector/vector.yaml`
 - Data directory: `vector/data`
 - Ports:
   - 8686: Vector API and web UI
-  - 9598: Vector metrics
-  - 514: Syslog (TCP/UDP)
+  - 8080: Reports endpoint
 
 ### Loki
 - Configuration: `loki/loki-config.yml`
@@ -46,9 +57,9 @@ Endpoint for Content Security Policy (CSP) reports using Vector, Loki, and Grafa
 ## Usage
 
 The stack is configured to:
-1. Vector collects demo logs and syslog data
-2. Vector forwards logs to Loki
-3. Grafana displays logs from Loki with pre-configured dashboards
+1. Vector collects CSP Reports in JSON format
+2. Vector forwards reports to Loki
+3. Grafana displays reports from Loki with pre-configured dashboards
 
 ## Stopping the Stack
 

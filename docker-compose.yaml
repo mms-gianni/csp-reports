@@ -5,10 +5,7 @@ services:
     image: timberio/vector:0.34.0-distroless-libc
     container_name: vector
     ports:
-      - "8686:8686"  # Vector API and web UI
-      - "9598:9598"  # Vector metrics
-      - "514:514"    # Syslog TCP
-      - "514:514/udp" # Syslog UDP
+      - "8686:8686"  # Vector API and web UI (use path /playground)
       - "8080:8080"  # HTTP server for CSP reports
     volumes:
       - ./vector/vector.yaml:/etc/vector/vector.yaml:ro
