@@ -30,20 +30,31 @@ transforms:
     type: "remap"
     inputs:
       - "csp_reports"
-      - "syslog"
-      - "file_logs"
     source: |
       .timestamp = now()
       .service = "vector-demo"
       if exists(.message) {
         .message = string!(.message)
       }
+  parse_csp_json:
+    type: "remap"
+    inputs:
+      - "csp_reports"
+    source: |
+      .timestamp = now()
+      .service = "csp-report"
+      if exists(.message) {
+        .message = string!(.message)
+      }
+      .url = .url
+
 
 sinks:
   loki:
     type: "loki"
     inputs:
       - "parse_logs"
+      - "parse_csp_json"
     endpoint: "http://loki:3100"
     encoding:
       codec: "json"
